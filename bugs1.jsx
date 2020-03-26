@@ -1,3 +1,4 @@
+console.log("Put your JSX code here");
 const data = [{
     name: "List of users",
     userlist: [
@@ -34,7 +35,7 @@ function UserList(props) {
             />
         ))}
     </ul>
-}python -m SimpleHTTPServer
+}
 
 
 function Userdata(props) {
