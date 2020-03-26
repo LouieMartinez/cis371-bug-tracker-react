@@ -1,34 +1,73 @@
 const data = [{
-    name: "List of users",
-    userlist: [
-        { name: "Jason Burrow", age: "25", occupation: "Software Developer" },
-        { name: "Brandon Hammell", age: "24", occupation: "Journalist"},
-        { name: "Jordan Howard", age: "27", occupation: "Networking Analyst" },
-        { name: "Lorin Ashton", age: "31", occupation: "Record Producer"},
-        { name: "Mike Evans", age: "26", occupation: "Sports Manager" },
-        { name: "Jeff Dobak", age: "35", occupation: "Accountant" }
+    name: "Baked Salmon",
+    ingredients: [
+        { name: "Salmon", amount: 1, measurement: "l lb" },
+        { name: "Pine Nuts", amount: 1, measurement: "cup" },
+        { name: "Butter Lettuce", amount: 2, measurement: "cups" },
+        { name: "Yellow Squash", amount: 1, measurement: "med" },
+        { name: "Olive Oil", amount: 0.5, measurement: "cup" },
+        { name: "Garlic", amount: 3, measurement: "cloves" }
     ],
-} 
+    steps: [
+        "Preheat the oven to 350 degrees.",
+        "Spread the olive oil around a glass baking dish.",
+        "Add the yellow squash and place in the oven for 30 mins.",
+        "Add the salmon, garlic, and pine nuts to the dish.",
+        "Bake for 15 minutes.",
+        "Remove from oven. Add the lettuce and serve."
+    ]
+},
+{
+    name: "Fish Tacos",
+    ingredients: [
+        { name: "Whitefish", amount: 1, measurement: "l lb" },
+        { name: "Cheese", amount: 1, measurement: "cup" },
+        { name: "Iceberg Lettuce", amount: 2, measurement: "cups" },
+        { name: "Tomatoes", amount: 2, measurement: "large" },
+        { name: "Tortillas", amount: 3, measurement: "med" }
+    ],
+    steps: [
+        "Cook the fish on the grill until cooked through.",
+        "Place the fish on the 3 tortillas.",
+        "Top them with lettuce, tomatoes, and cheese."
+    ]
+},
+{
+    name: "Fruit Smoothie",
+    ingredients: [
+        { name: "Banana", amount: 1, measurement: "large" },
+        { name: "Strawberries", amount: 1, measurement: "cup" },
+        { name: "Blueberries", amount: 0.5, measurement: "cup" },
+        { name: "Orange Juice", amount: 1, measurement: "cup" },
+    ],
+    steps: [
+        "Put all ingredients in the blender",
+        "Blend until smooth"
+    ]
+}
 ];
 
-function User(props) {
-    return <li> {props.age} {props.occupation} {props.name} </li>;
+function Ingredient(props) {
+    return <li> {props.amount} {props.measurement} {props.name} </li>;
 }
-function UserListDemo(props) {
-    let list = props.UserList;
-    return <ul className="userlist" >
-        <User age={list[0].age} occupation={list[0].occupation} name={list[0].name} key='0' />
-        <User age={list[1].age} occupation={list[1].occupation} name={list[1].name} key='1' />
-        <User age={list[2].age} occupation={list[2].occupation} name={list[2].name} key='2' />
-        <User age={list[3].age} occupation={list[3].occupation} name={list[3].name} key='3' />
+
+/* Note:  You would not normally write it this way.  I include this Demo in case it is easier to
+   understand than the "real" version below that uses .map */
+function IngredientListDemo(props) {
+    let list = props.ingredients;
+    return <ul className="ingredients" >
+        <Ingredient amount={list[0].amount} measurement={list[0].measurement} name={list[0].name} key='0' />
+        <Ingredient amount={list[1].amount} measurement={list[1].measurement} name={list[1].name} key='1' />
+        <Ingredient amount={list[2].amount} measurement={list[2].measurement} name={list[2].name} key='2' />
+        <Ingredient amount={list[3].amount} measurement={list[3].measurement} name={list[3].name} key='3' />
     </ul>;
 }
 
-function UserList(props) {
-    return <ul className="userlist" > {
-        props.userlist.map((item, index) => (
-            <User age={item.age}
-                occupation={item.occupation}
+function IngredientList(props) {
+    return <ul className="ingredients" > {
+        props.ingredients.map((item, index) => (
+            <Ingredient amount={item.amount}
+                measurement={item.measurement}
                 name={item.name}
                 key={index}
             />
@@ -36,11 +75,17 @@ function UserList(props) {
     </ul>
 }
 
+function Instructions(props) {
+    return <div className='instructions'>
+        <h3>Instructions</h3>
+        {props.steps.map((step, index) => (<p key={index}>{step}</p>))}
+    </div>;
+}
 
-function Userdata(props) {
+function Recipe(props) {
     return <div>
         <h2 > {props.name} </h2>
-        <UserList userlist={props.userlist} />
+        <IngredientList ingredients={props.ingredients} />
         <Instructions steps={props.steps} />
     </div>;
 }
@@ -48,11 +93,11 @@ function Userdata(props) {
 function Menu(props) {
     return <section>
         <h1> {props.title} </h1>
-        <div className='usersdata' > {props.usersdata.map((userdata, index) => (
+        <div className='recipes' > {props.recipes.map((recipe, index) => (
             <Recipe key={index}
-                name={userdata.name}
-                userlist={userdata.userlist}
-                steps={userdata.steps}
+                name={recipe.name}
+                ingredients={recipe.ingredients}
+                steps={recipe.steps}
             />
         ))}
         </div>
@@ -60,6 +105,6 @@ function Menu(props) {
 }
 
 ReactDOM.render(
-    <Menu usersdata={data} title="List of Users" />,
+    <Menu recipes={data} title="Sample Recipe List #1" />,
     document.getElementById("main")
 );
