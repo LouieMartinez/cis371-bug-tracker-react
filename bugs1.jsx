@@ -1,34 +1,42 @@
+// Sample code available on GitHub: https://github.com/kurmasz-SampleCode/CIS371-SampleCode
+// Based on an example from Learning React, 2nd Edition by Porcello and Banks.
+// This example is in React/recipe1.jsx
+
 const data = [{
-    name: "List of users",
-    userlist: [
-        { name: "Jason Burrow", age: "25", occupation: "Software Developer" },
-        { name: "Brandon Hammell", age: "24", occupation: "Journalist"},
-        { name: "Jordan Howard", age: "27", occupation: "Networking Analyst" },
-        { name: "Lorin Ashton", age: "31", occupation: "Record Producer"},
-        { name: "Mike Evans", age: "26", occupation: "Sports Manager" },
-        { name: "Jeff Dobak", age: "35", occupation: "Accountant" }
+    name: "Group of Users 1",
+    users: [
+        { name: "Jonah Hill" },
+        { name: "Adam Sandlar"},
+        { name: "Seth Rogen" },
+        { name: "Kanye West" },
+        { name: "Donald Glover"},
+        { name: "Post Malone"}
     ],
-} 
+
+},
+
 ];
 
-function User(props) {
-    return <li> {props.age} {props.occupation} {props.name} </li>;
+function Ingredient(props) {
+    return <li> {props.name} </li>;
 }
-function UserListDemo(props) {
-    let list = props.UserList;
-    return <ul className="userlist" >
-        <User age={list[0].age} occupation={list[0].occupation} name={list[0].name} key='0' />
-        <User age={list[1].age} occupation={list[1].occupation} name={list[1].name} key='1' />
-        <User age={list[2].age} occupation={list[2].occupation} name={list[2].name} key='2' />
-        <User age={list[3].age} occupation={list[3].occupation} name={list[3].name} key='3' />
+
+/* Note:  You would not normally write it this way.  I include this Demo in case it is easier to
+   understand than the "real" version below that uses .map */
+function IngredientListDemo(props) {
+    let list = props.users;
+    return <ul className="users" >
+        <Ingredient name={list[0].name} key='0' />
+        <Ingredient name={list[1].name}  key='1' />
+        <Ingredient name={list[2].name}  key='2' />
+        <Ingredient name={list[3].name}  key='3' />
     </ul>;
 }
 
-function UserList(props) {
-    return <ul className="userlist" > {
-        props.userlist.map((item, index) => (
-            <User age={item.age}
-                occupation={item.occupation}
+function IngredientList(props) {
+    return <ul className="users" > {
+        props.users.map((item, index) => (
+            <Ingredient 
                 name={item.name}
                 key={index}
             />
@@ -36,23 +44,29 @@ function UserList(props) {
     </ul>
 }
 
+function Instructions(props) {
+    return <div className='instructions'>
+        <h3>Instructions</h3>
+        {props.steps.map((step, index) => (<p key={index}>{step}</p>))}
+    </div>;
+}
 
-function Userdata(props) {
+function Recipe(props) {
     return <div>
         <h2 > {props.name} </h2>
-        <UserList userlist={props.userlist} />
-        <Instructions steps={props.steps} />
+        <IngredientList users={props.users} />
+        
     </div>;
 }
 
 function Menu(props) {
     return <section>
         <h1> {props.title} </h1>
-        <div className='usersdata' > {props.usersdata.map((userdata, index) => (
+        <div className='recipes' > {props.recipes.map((recipe, index) => (
             <Recipe key={index}
-                name={userdata.name}
-                userlist={userdata.userlist}
-                steps={userdata.steps}
+                name={recipe.name}
+                users={recipe.users}
+
             />
         ))}
         </div>
@@ -60,6 +74,6 @@ function Menu(props) {
 }
 
 ReactDOM.render(
-    <Menu usersdata={data} title="List of Users" />,
+    <Menu recipes={data} title="List of Users" />,
     document.getElementById("main")
 );
