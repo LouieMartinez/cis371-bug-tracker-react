@@ -1,4 +1,3 @@
-console.log("Put your JSX code here");
 const data = [{
     name: "List of users",
     userlist: [
